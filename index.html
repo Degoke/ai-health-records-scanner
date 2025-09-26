@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Worker Image Analysis</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>AI Worker Image Analysis 🔬</h1>
+      <p>Select an image to send to the AI Worker for processing.</p>
+
+      <div class="layout">
+        <div class="left-pane">
+          <input type="file" id="imageLoader" accept="image/*">
+
+          <div id="controls" style="display: none;" class="controls">
+            <button id="processButton">Scan Record ID</button>
+            <button id="radiologyButton" class="secondary">Radiology Explain</button>
+          </div>
+
+          <div id="status"></div>
+
+          <canvas id="canvas" style="display: none;"></canvas>
+          <img id="imagePreview" style="display: none; max-width: 100%; height: auto; margin-top: 1rem; border: 1px solid #ddd;">
+        </div>
+
+        <div class="right-pane">
+          <div class="tabs" id="results-tabs" style="display: none;">
+            <button class="tab-btn active" data-tab="extracted-tab">Extracted</button>
+            <button class="tab-btn" data-tab="fhir-tab">FHIR</button>
+            <button class="tab-btn" data-tab="radiology-tab">Radiology</button>
+            <button class="tab-btn" data-tab="tools-tab">Tools</button>
+          </div>
+
+          <div id="results-container" style="display: none;">
+            <div class="tab-panel active" id="extracted-tab">
+              <div id="extracted-content-section">
+                <h3>📄 Extracted Content from Image</h3>
+                <textarea id="extracted-content" class="editable-content" placeholder="Extracted content will appear here..."></textarea>
+                <button id="process-fhir-btn" style="display: none;">Process with FHIR Worker</button>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="fhir-tab">
+              <div id="fhir-results-section">
+                <h3>🏥 FHIR Processing Results</h3>
+                <div style="margin-bottom: 1rem;">
+                  <h4 style="margin: 0 0 0.5rem 0;">Full FHIR Worker Output</h4>
+                  <pre id="fhir-full-output"></pre>
+                </div>
+                <div>
+                  <h4 style="margin: 1rem 0 0.5rem 0;">Extracted FHIR JSON</h4>
+                  <textarea id="fhir-json" class="editable-content" placeholder="FHIR JSON will appear here..."></textarea>
+                  <button id="save-fhir-btn" style="display: none;">Save to FHIR Server</button>
+                </div>
+                <div>
+                  <h4 style="margin: 1rem 0 0.5rem 0;">Rendered (Markdown)</h4>
+                  <div id="fhir-md" class="markdown-view"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="radiology-tab">
+              <div id="radiology-results-section">
+                <h3>🔬 Radiology Analysis Results</h3>
+                <pre id="radiology-output"></pre>
+                <div>
+                  <h4 style="margin: 1rem 0 0.5rem 0;">Rendered (Markdown)</h4>
+                  <div id="radiology-md" class="markdown-view"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tools-tab">
+              <!-- Tool Call UI -->
+              <div id="tool-call-container" style="display: none;">
+                <h2>Tool Action Required</h2>
+                <div id="tool-call-info">
+                  <p>The AI worker requires action to continue processing.</p>
+                </div>
+                <div id="tool-calls-list"></div>
+                <div id="tool-outputs-container">
+                  <h3>Provide Tool Outputs</h3>
+                  <div id="tool-outputs-list"></div>
+                  <button id="submit-tool-outputs" style="display: none;">Submit Tool Outputs</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
