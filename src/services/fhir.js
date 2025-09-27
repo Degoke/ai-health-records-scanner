@@ -1,4 +1,4 @@
-import { client, FHIR_WORKER_ID, FHIR_SERVER_BASE_URL } from '../config.js';
+import { client, FHIR_WORKER_ID, FHIR_SERVER_BASE_URL, FHIR_API_KEY } from '../config.js';
 import { updateStatus } from '../utils/dom.js';
 import { sleep } from '../utils/time.js';
 import { extractJsonString, decodeHtmlEntities } from '../utils/json.js';
@@ -99,7 +99,7 @@ export async function saveFHIRToServer(resource) {
 
   const response = await fetch(url, {
     method,
-    headers: { 'Content-Type': 'application/fhir+json' },
+    headers: { 'Content-Type': 'application/fhir+json', 'Authorization': `Bearer ${FHIR_API_KEY}` },
     body: JSON.stringify(normalized)
   });
 
